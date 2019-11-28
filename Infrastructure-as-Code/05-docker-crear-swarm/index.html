@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Labs - Devops Foundations Devops.gt</title>
+  <title>05 docker crear swarm - Devops Foundations Devops.gt</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Labs";
-    var mkdocs_page_input_path = "Infrastructure-as-Code/labs.md";
+    var mkdocs_page_name = "05 docker crear swarm";
+    var mkdocs_page_input_path = "Infrastructure-as-Code/05-docker-crear-swarm.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -57,15 +57,9 @@
 		
     <span class="caption-text">Infrastructure-as-Code</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Labs</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#laboratorios-de-este-modulo">Laboratorios de este modulo</a></li>
-    
-
-    </ul>
+    <a class="" href="../labs/">Labs</a>
                 </li>
     </ul>
 	    </li>
@@ -101,12 +95,8 @@
     <li><a href="../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Infrastructure-as-Code &raquo;</li>
-        
-      
     
-    <li>Labs</li>
+    <li>05 docker crear swarm</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -116,27 +106,37 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="laboratorios-de-este-modulo">Laboratorios de este modulo</h1>
-<ul>
-<li><a href="../01-cvs-git/">CVS-Github Basico</a></li>
-<li><a href="../02-terraform/">Terraform-AWS</a></li>
-<li><a href="../03-terraform-bootstrap/">Terraform-AW-Bootstrap</a></li>
-<li><a href="../04-ansible-playbook/">Ansible Configuration Management</a></li>
-<li><a href="../05-docker-crear-swarm/">Docker Swarm cluster</a></li>
-</ul>
+                <h2 id="configuration-de-swarm-manager">Configuration de Swarm Manager</h2>
+<ol>
+<li>Desde la terminal del servidor con el usuario ec2-user connectese a una de las maquinas, este sera el docker swarm mananger <code>ssh -i "demo.pem" ec2-user@&lt;IP&gt;</code></li>
+<li>Cambiese al usuario root con el comando <code>sudo -i</code></li>
+<li>Verifique que el servicio de docker este corriendo <code>service docker status</code></li>
+<li>Si el servicio no esta corriendo inicielo con el comando <code>service docker start</code></li>
+<li>Inicie el swarm manager con el comando <code>docker swarm init</code></li>
+<li>Obtenga el comando para unir nodos a docker swarm corriendo <code>docker swarm join-token worker</code> </li>
+<li>Copie el resultado y guardelo</li>
+</ol>
+<h2 id="agregar-un-nodo-worker">Agregar un nodo worker</h2>
+<ol>
+<li>Desde la terminal del servidor con el usuario ec2-user connectese a una de las maquinas, este sera el docker swarm worker <code>ssh -i "demo.pem" ec2-user@&lt;IP&gt;</code></li>
+<li>Cambiese al usuario root con el comando <code>sudo -i</code></li>
+<li>Verifique que el servicio de docker este corriendo <code>service docker status</code></li>
+<li>Si el servicio no esta corriendo inicielo con el comando <code>service docker start</code></li>
+<li>Una el nodo al docker swarm correindo el comando copiado en la seccion anterior</li>
+</ol>
+<h2 id="verficacion">Verficacion</h2>
+<ol>
+<li>Corra el comando <code>docker node ls</code> debera mostrarle dos contenedores como miembros del cluster</li>
+</ol>
+<h2 id="instalacion-de-portainer">Instalacion de portainer</h2>
+<p>Portainer es una UI para poder ver el estado del cluster de docker para instalarla corra el comando</p>
+<p><code>docker service create --name portainer_agent --network portainer_agent_network --publish mode=host,target=8000,published=8000 -e AGENT_CLUSTER_ADDR=tasks.portainer_agent --mode global --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes –-mount type=bind,src=/,dst=/host portainer/agent</code></p>
+<p>Puede verificar la instalacion en la dirrecion de su balancer</p>
+<p>https://<balancerurl>:8000</p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../Conectarse-ssh/" class="btn btn-neutral float-right" title="Connecion SSH">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -160,10 +160,6 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../Conectarse-ssh/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
