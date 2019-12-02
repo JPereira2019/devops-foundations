@@ -39,9 +39,11 @@ resource "aws_autoscaling_group" "terraform-ASGlab4" {
   load_balancers = ["${aws_elb.terraformlab4.name}"]
   health_check_type = "EC2"
   max_size = 10
-  min_size = 2
+  min_size = 0
+  desired_capacity = 0
   tag {
-    Name =  "${var.name}"
+    key                 = "Name"
+    value               = "${var.name}"
     propagate_at_launch = true
   }
 }
