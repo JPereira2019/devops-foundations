@@ -110,7 +110,12 @@
 <ol>
 <li>Desde la terminal del servidor con el usuario ec2-user connectese a una de las maquinas, este sera el docker swarm mananger <code>ssh -i "demo.pem" ec2-user@&lt;IP&gt;</code></li>
 <li>Cambiese al usuario root con el comando <code>sudo -i</code></li>
-<li>Verifique que el servicio de docker este corriendo <code>service docker status</code></li>
+<li>Verifique que el servicio de docker este corriendo <code>service docker status</code> la salida debera ser similar a la siguiente </li>
+</ol>
+<pre><code>   docker (pid  14173) is running...
+</code></pre>
+
+<ol>
 <li>Si el servicio no esta corriendo inicielo con el comando <code>service docker start</code></li>
 <li>Inicie el swarm manager con el comando <code>docker swarm init</code></li>
 <li>Obtenga el comando para unir nodos a docker swarm corriendo <code>docker swarm join-token worker</code> </li>
@@ -121,6 +126,11 @@
 <li>Desde la terminal del servidor con el usuario ec2-user connectese a una de las maquinas, este sera el docker swarm worker <code>ssh -i "demo.pem" ec2-user@&lt;IP&gt;</code></li>
 <li>Cambiese al usuario root con el comando <code>sudo -i</code></li>
 <li>Verifique que el servicio de docker este corriendo <code>service docker status</code></li>
+</ol>
+<pre><code>   docker (pid  14173) is running...
+</code></pre>
+
+<ol>
 <li>Si el servicio no esta corriendo inicielo con el comando <code>service docker start</code></li>
 <li>Una el nodo al docker swarm correindo el comando copiado en la seccion anterior</li>
 </ol>
