@@ -23,8 +23,13 @@
             - lvm2
             - docker
 
+      - name: Add not admin user to docker daemon
+        shell: >
+          usermod -aG docker ec2-user
+
       - name: Enable Docker CE service at startup
         service:
           name: docker
           state: started
           enabled: yes
+

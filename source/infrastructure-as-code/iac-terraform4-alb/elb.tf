@@ -1,5 +1,5 @@
 resource "aws_elb" "terraformlab4" {
-  name               = "${var.name}"
+  name                       = "${var.name}"
   listener {
     instance_port     = 8000
     instance_protocol = "http"
@@ -28,6 +28,13 @@ resource "aws_elb" "terraformlab4" {
     lb_protocol        = "http"
   }
 
+  listener {
+    instance_port      = 9000
+    instance_protocol  = "http"
+    lb_port            = 9000
+    lb_protocol        = "http"
+  }
+
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
@@ -40,8 +47,8 @@ resource "aws_elb" "terraformlab4" {
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
-
-  subnets = ["subnet-049706ae911f72263","subnet-08bb614d5f1235d54"]
+  security_groups             = [ "${aws_security_group.security_group.id}" ]
+  subnets                     = ["subnet-049706ae911f72263","subnet-08bb614d5f1235d54"]
 
   tags = {
     Name =  "${var.name}"

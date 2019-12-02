@@ -33,14 +33,14 @@ resource "aws_launch_configuration" "terraformlab4" {
 }
 
 resource "aws_autoscaling_group" "terraform-ASGlab4" {
-  launch_configuration = "${aws_launch_configuration.terraformlab4.id}"
-  vpc_zone_identifier       = ["subnet-02e2501d089873c29", "subnet-0d45a460e80029489"]
+  launch_configuration  = "${aws_launch_configuration.terraformlab4.id}"
+  vpc_zone_identifier   = ["subnet-02e2501d089873c29", "subnet-0d45a460e80029489"]
 
-  load_balancers = ["${aws_elb.terraformlab4.name}"]
-  health_check_type = "EC2"
-  max_size = 10
-  min_size = 0
-  desired_capacity = 0
+  load_balancers        = ["${aws_elb.terraformlab4.name}"]
+  health_check_type     = "EC2"
+  max_size              = 10
+  min_size              = 3
+  desired_capacity      = 3
   tag {
     key                 = "Name"
     value               = "${var.name}"
